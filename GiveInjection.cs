@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 ///<summary>
 ///attach to needle GO
@@ -10,10 +11,13 @@ namespace VRH
     {
         public static Action pain;
         public GameObject bloodFX;
+        [SerializeField] GameObject ui;
+        bool scoreAdded;
 
         void Start()
         {
             bloodFX.SetActive(false);
+            scoreAdded = false;
         }
      
         void Update()
@@ -29,7 +33,12 @@ namespace VRH
                 {
                     pain();
                 }
-                ScoreManager.currentScore += 5;
+                if(!scoreAdded) ScoreManager.currentScore += 5;
+                scoreAdded = true;
+            }
+            if(col.gameObject.CompareTag("Player"))
+            {
+                ui.SetActive(false);
             }
         }
         void OnTriggerExit(Collider col)
@@ -38,6 +47,11 @@ namespace VRH
             {
                 bloodFX.SetActive(false);
             }
+            // if(col.gameObject.CompareTag("Player"))
+            // {
+            //     ui.SetActive(true);
+            //     //add code to always display ui at a vector3.up offset
+            // }
         }
     }
 }    

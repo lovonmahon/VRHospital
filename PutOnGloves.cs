@@ -6,10 +6,11 @@ namespace VRH
     public class PutOnGloves : MonoBehaviour
     {
         public static Action glovesOn;
+        bool scoreAdded;
 
         void Start()
         {
-
+            scoreAdded = false;
         }
 
         void OnTriggerEnter(Collider col) 
@@ -20,7 +21,8 @@ namespace VRH
                 {
                     glovesOn();
                     //Add a score to ScoreManager here
-                    ScoreManager.currentScore += 10;
+                    if(!scoreAdded) ScoreManager.currentScore += 10;
+                    scoreAdded = true;
                 }
             }
         }

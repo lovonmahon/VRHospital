@@ -4,21 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+//Attach to canvas
 public class UIManager : MonoBehaviour
 {
     
-    [SerializeField] Image icon;
-    [SerializeField] Vector3 offset;
-    
-    // Start is called before the first frame update
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        
+        transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
     }
 }
