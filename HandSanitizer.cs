@@ -15,23 +15,20 @@ namespace VRH
             handSanitizerSpray.SetActive(false);
             scoreAdded = false;
         }
-
         // Update is called once per frame
         void Update()
         {
 
         }
-
         void OnTriggerEnter(Collider col)
         {
             if(col.gameObject.CompareTag("Player"))
             {
                 handSanitizerSpray.SetActive(true);
-                if(!scoreAdded) ScoreManager.currentScore += 5;
+                if(!scoreAdded) ScoreManager.currentScore += 25;
                 scoreAdded = true;
             }
         }
-
         void OnTriggerExit(Collider col)
         {
             if(col.gameObject.CompareTag("Player"))

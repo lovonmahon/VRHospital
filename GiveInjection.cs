@@ -19,7 +19,6 @@ namespace VRH
             bloodFX.SetActive(false);
             scoreAdded = false;
         }
-     
         void Update()
         {
 
@@ -33,7 +32,7 @@ namespace VRH
                 {
                     pain();
                 }
-                if(!scoreAdded) ScoreManager.currentScore += 5;
+                if(!scoreAdded) ScoreManager.currentScore += 25;
                 scoreAdded = true;
             }
             if(col.gameObject.CompareTag("Player"))
@@ -47,11 +46,6 @@ namespace VRH
             {
                 bloodFX.SetActive(false);
             }
-            // if(col.gameObject.CompareTag("Player"))
-            // {
-            //     ui.SetActive(true);
-            //     //add code to always display ui at a vector3.up offset
-            // }
         }
     }
 }    

@@ -1,21 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+﻿using UnityEngine;
 
 //Attach to canvas
-public class UIManager : MonoBehaviour
+namespace VRH
 {
-    
-    void Start()
+    public class UIManager : MonoBehaviour
     {
-       
-    }
-
-    // Update is called once per frame
-    void LateUpdate()
-    {
-        transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+        void Start()
+        {
+        
+        }
+        // Update is called once per frame
+        void LateUpdate()
+        {
+            transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+        }
     }
 }

@@ -8,8 +8,8 @@ namespace VRH
 {    
     public class SoundManager : MonoBehaviour
     {
-        [SerializeField] AudioSource pain;
-        [SerializeField] AudioSource cough;
+        [SerializeField] AudioSource _pain;
+        [SerializeField] AudioSource _cough;
         float coughInterval;
         float coughReset;
         void Start()
@@ -20,14 +20,13 @@ namespace VRH
         }
         void Pain()
         {
-            pain.Play();
+            _pain.Play();
         }
         void Cough()
         {
-            Debug.Log(coughReset);
             if(coughReset > coughInterval)
             {
-                cough.Play();
+                _cough.Play();
                 coughReset = 0f;
             }
         }
@@ -35,12 +34,15 @@ namespace VRH
         {
             coughReset += Time.deltaTime;
         }
-
         // Update is called once per frame
         void Update()
         {
             Cough();
             CoughCounter();
+        }
+        void OnDisable()
+        {
+            GiveInjection.pain -= Pain;
         }
     }
 }
