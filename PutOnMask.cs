@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using PixelCrushers.LoveHate;
 using UnityEngine;
 
 namespace VRH
@@ -7,6 +6,7 @@ namespace VRH
     public class PutOnMask : MonoBehaviour
     {
         bool scoreAdded;
+        [SerializeField] GameObject faceMask;
         // Start is called before the first frame update
         void Start()
         {
@@ -18,8 +18,13 @@ namespace VRH
        {
            if(col.gameObject.CompareTag("Player"))
            {
-               if(!scoreAdded) ScoreManager.currentScore += 25;
-               scoreAdded = true;
+                if(faceMask != null)
+                {
+                    if(!scoreAdded) ScoreManager.currentScore += 25;
+                    scoreAdded = true;
+                    Destroy(faceMask);
+                    GetComponent<DeedReporter>().ReportDeed("Comfort", this.GetComponent<FactionMember>());
+                }
            }
        }
     }
