@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 namespace VRH
 {
     public class HandSanitizer : MonoBehaviour
     {
+        public static Action useSanitizer;
         public GameObject handSanitizerSpray;
         bool scoreAdded;
 
@@ -27,6 +27,7 @@ namespace VRH
                 handSanitizerSpray.SetActive(true);
                 if(!scoreAdded) ScoreManager.currentScore += 25;
                 scoreAdded = true;
+                if(useSanitizer != null) useSanitizer();
             }
         }
         void OnTriggerExit(Collider col)

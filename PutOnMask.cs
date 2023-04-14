@@ -1,10 +1,11 @@
-﻿using PixelCrushers.LoveHate;
+﻿using System;
 using UnityEngine;
 
 namespace VRH
 {
     public class PutOnMask : MonoBehaviour
     {
+        public static Action maskOn;
         bool scoreAdded;
         [SerializeField] GameObject faceMask;
         // Start is called before the first frame update
@@ -21,9 +22,9 @@ namespace VRH
                 if(faceMask != null)
                 {
                     if(!scoreAdded) ScoreManager.currentScore += 25;
+                    if( maskOn != null) maskOn();
                     scoreAdded = true;
                     Destroy(faceMask);
-                    GetComponent<DeedReporter>().ReportDeed("Comfort", this.GetComponent<FactionMember>());
                 }
            }
        }
