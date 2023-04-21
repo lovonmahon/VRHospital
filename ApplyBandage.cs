@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ namespace VRH
 {    
     public class ApplyBandage : MonoBehaviour
     {
+        public static Action bandageOn;
         public GameObject bandage;
         bool scoreAdded;
 
@@ -13,11 +15,6 @@ namespace VRH
         {
             bandage.SetActive(false);
             scoreAdded = false;
-        }
-
-        void Update()
-        {
-
         }
         public void PutOnBandage()
         {
@@ -28,8 +25,21 @@ namespace VRH
             if(col.gameObject.CompareTag("Bandage"))
             {
                 PutOnBandage();
+                if(bandageOn != null) bandageOn();
                 if(!scoreAdded) ScoreManager.currentScore += 25;
             }
+        }
+        void OnTriggerExit(Collider col)
+        {
+            if(col.gameObject.CompareTag("Player"))
+            {
+                StartCoroutine("DestroyThisTrigger", 2f);
+            }
+        }
+        IEnumerator DestroyThisTrigger()
+        {
+            yield return null;
+            Destroy(this.gameObject);
         }
     }    
 }

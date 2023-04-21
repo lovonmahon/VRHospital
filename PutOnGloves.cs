@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using BNG;
 
@@ -20,7 +21,7 @@ namespace VRH
             scoreAdded = false;
         }
         
-        void OnTriggerExit(Collider col) 
+        void OnTriggerEnter(Collider col) 
         {
             if(col.gameObject.CompareTag("Player"))
             {
@@ -35,6 +36,18 @@ namespace VRH
                     scoreAdded = true;
                 }
             }
+        }
+        void OnTriggerExit(Collider col)
+        {
+            if(col.gameObject.CompareTag("Player"))
+            {
+                StartCoroutine("DestroyThisTrigger", 2f);
+            }
+        }
+        IEnumerator DestroyThisTrigger()
+        {
+            yield return null;
+            Destroy(this.gameObject);
         }
     }
 }

@@ -13,7 +13,8 @@ namespace VRH
             {
                 GetComponent<AudioSource>().PlayOneShot(clip, 0.5f);
                 if(takeTemp != null) takeTemp();
-                ScoreManager.currentTemp = UnityEngine.Random.Range(97.2f, 98.9f);
+                ScoreManager.currentTemp = UnityEngine.Random.Range(97.2f, 99.9f);
+                ScoreManager.currentScore -= UnityEngine.Random.Range(10, 25);
             }
         }
     }

@@ -10,6 +10,11 @@ namespace VRH
     {
         [SerializeField] AudioSource _pain;
         [SerializeField] AudioSource _cough;
+        [SerializeField] AudioSource _hostile;
+        [SerializeField] AudioSource _anxious;
+        [SerializeField] AudioSource _neutral;
+        [SerializeField] AudioSource _happy;
+
         float coughInterval;
         float coughReset;
         void Start()
@@ -43,6 +48,22 @@ namespace VRH
         void OnDisable()
         {
             GiveInjection.pain -= Pain;
+        }
+        public void PlayHostileSound()
+        {
+            _hostile.PlayOneShot(_hostile.clip);
+        }
+        public void PlayAnxiousSound()
+        {
+            _anxious.PlayOneShot(_anxious.clip);
+        }
+        public void PlayNeutralSound()
+        {
+            _neutral.PlayOneShot(_neutral.clip);
+        }
+        public void PlayExhuberantSound()
+        {
+            _happy.PlayOneShot( _happy.clip);
         }
     }
 }

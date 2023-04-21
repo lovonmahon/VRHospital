@@ -25,7 +25,7 @@ namespace VRH
             if(col.gameObject.CompareTag("Player"))
             {
                 handSanitizerSpray.SetActive(true);
-                if(!scoreAdded) ScoreManager.currentScore += 25;
+                if(!scoreAdded) ScoreManager.currentScore += UnityEngine.Random.Range(5, 15);
                 scoreAdded = true;
                 if(useSanitizer != null) useSanitizer();
             }

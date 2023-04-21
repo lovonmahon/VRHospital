@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace VRH
@@ -28,5 +29,17 @@ namespace VRH
                 }
            }
        }
+       void OnTriggerExit(Collider col)
+        {
+            if(col.gameObject.CompareTag("Player"))
+            {
+                StartCoroutine("DestroyThisTrigger", 2f);
+            }
+        }
+        IEnumerator DestroyThisTrigger()
+        {
+            yield return null;
+            Destroy(this.gameObject);
+        }
     }
 }
