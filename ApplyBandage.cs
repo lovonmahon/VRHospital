@@ -38,7 +38,7 @@ namespace VRH
         }
         IEnumerator DestroyThisTrigger()
         {
-            yield return null;
+            yield return null;//wait a frame before destroying
             Destroy(this.gameObject);
         }
     }    

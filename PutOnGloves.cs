@@ -30,7 +30,6 @@ namespace VRH
                     glovesOn();
                     _rightHand.GetComponent<Renderer>().material = _gloveColor;
                     _leftHand.GetComponent<Renderer>().material = _gloveColor;
-
                     //Add a score to ScoreManager here
                     if(!scoreAdded) ScoreManager.currentScore += 25;
                     scoreAdded = true;
@@ -39,10 +38,7 @@ namespace VRH
         }
         void OnTriggerExit(Collider col)
         {
-            if(col.gameObject.CompareTag("Player"))
-            {
-                StartCoroutine("DestroyThisTrigger", 2f);
-            }
+            if(col.gameObject.CompareTag("Player")) StartCoroutine("DestroyThisTrigger", 2f);
         }
         IEnumerator DestroyThisTrigger()
         {

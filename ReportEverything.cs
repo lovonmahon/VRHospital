@@ -29,12 +29,16 @@ namespace VRH
             TakeTemperature.takeTemp += PatientKnowledgeNegative;
             RandomDisorder.randomDisorder += PatientKnowledgeNegative;
             DialogueEffects.onNegativeDialogue += PatientKnowledgeNegative;
+            LightSwitch._lightsOn += PatientKnowledgeNegative;
+            
 
             //positive actions
             PutOnMask.maskOn += PatientKnowledgePositive;
             HandSanitizer.useSanitizer += PatientKnowledgePositive;
             DialogueEffects.onPositiveDialogue += PatientKnowledgePositive;
             PutOnGloves.glovesOn += PatientKnowledgePositive;
+            LightSwitch._lightsOff += PatientKnowledgePositive;
+            GiveToPatient.onHappy += PatientKnowledgePositive;
         }
         void OnDisable()
         {
@@ -43,12 +47,15 @@ namespace VRH
             TakeTemperature.takeTemp -= PatientKnowledgeNegative;
             RandomDisorder.randomDisorder -= PatientKnowledgeNegative;
             DialogueEffects.onNegativeDialogue -= PatientKnowledgeNegative;
+            LightSwitch._lightsOn -= PatientKnowledgeNegative;
 
             //Positive actions
             PutOnMask.maskOn -= PatientKnowledgePositive;
             HandSanitizer.useSanitizer -= PatientKnowledgePositive;
             DialogueEffects.onPositiveDialogue -= PatientKnowledgePositive;
             PutOnGloves.glovesOn -= PatientKnowledgePositive;
+            LightSwitch._lightsOff -= PatientKnowledgePositive;
+            GiveToPatient.onHappy -= PatientKnowledgePositive;
         }
 
         void PatientKnowledgePositive()
@@ -58,8 +65,9 @@ namespace VRH
         }
         void PatientKnowledgeNegative()
         {
-            _deed.ReportDeed("Hurt", _patientFaction);
-            // _patientFaction.pad.Modify(-10, -10, 10, -10);
+            // _deed.ReportDeed("Hurt", _patientFaction);
+            //happiness, pleasure, arousal, dominance
+            _patientFaction.pad.Modify(-20, -20, 20, 25);
 
         }
     }

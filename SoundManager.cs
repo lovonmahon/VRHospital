@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 //Script added to patient
 
@@ -14,56 +15,80 @@ namespace VRH
         [SerializeField] AudioSource _anxious;
         [SerializeField] AudioSource _neutral;
         [SerializeField] AudioSource _happy;
+        [SerializeField] List<AudioClip> _hostileClips;
+        [SerializeField] List<AudioClip> _anxiousClips;
+        [SerializeField] List<AudioClip> _neutralClips;
+        [SerializeField] List<AudioClip> _happyClips;
 
-        float coughInterval;
-        float coughReset;
+        float _coughInterval;
+        float _coughReset;
         void Start()
         {
             GiveInjection.pain += Pain;
-            coughInterval = Random.Range(10.0f, 30.0f);
-            coughReset = Time.deltaTime;
+            _coughInterval = Random.Range(10.0f, 30.0f);
+            _coughReset = Time.deltaTime;
         }
         void Pain()
         {
+            
             _pain.Play();
         }
         void Cough()
         {
-            if(coughReset > coughInterval)
+            if(_coughReset > _coughInterval)
             {
                 _cough.Play();
-                coughReset = 0f;
+                _coughReset = 0f;
             }
         }
         void CoughCounter()
         {
-            coughReset += Time.deltaTime;
+            _coughReset += Time.deltaTime;
         }
         // Update is called once per frame
         void Update()
         {
+            //Tag the cough function in profiler for analysis
+            // Profiler.BeginSample("Cough");
             Cough();
+            // Profiler.EndSample();
             CoughCounter();
+        }
+        void OnEnable()
+        {
+            CheckTemperament.happy += PlayExhuberantSound;
+            CheckTemperament.neutral += PlayNeutralSound;
+            CheckTemperament.anxious += PlayAnxiousSound;
+            CheckTemperament.hostile += PlayHostileSound;
         }
         void OnDisable()
         {
             GiveInjection.pain -= Pain;
+            CheckTemperament.happy -= PlayExhuberantSound;
+            CheckTemperament.neutral -= PlayNeutralSound;
+            CheckTemperament.anxious -= PlayAnxiousSound;
+            CheckTemperament.hostile -= PlayHostileSound;
         }
         public void PlayHostileSound()
         {
-            _hostile.PlayOneShot(_hostile.clip);
+            AudioClip currHostileClip = _hostileClips[Random.Range(0,_hostileClips.Count)];
+            _hostile.PlayOneShot(currHostileClip);
         }
         public void PlayAnxiousSound()
         {
-            _anxious.PlayOneShot(_anxious.clip);
+            AudioClip currAnxiousClip = _anxiousClips[Random.Range(0,_anxiousClips.Count)];
+            _anxious.PlayOneShot(currAnxiousClip);
         }
         public void PlayNeutralSound()
         {
-            _neutral.PlayOneShot(_neutral.clip);
+            AudioClip currNeutralClip = _neutralClips[Random.Range(0,_neutralClips.Count)];
+            _neutral.PlayOneShot(currNeutralClip);
         }
         public void PlayExhuberantSound()
         {
-            _happy.PlayOneShot( _happy.clip);
+            AudioClip currHappyClip = _happyClips[Random.Range(0,_happyClips.Count)];
+            _happy.PlayOneShot( currHappyClip);
         }
+       
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using PixelCrushers.LoveHate;
 using UnityEngine;
 
 namespace VRH
@@ -15,11 +16,15 @@ namespace VRH
     {
         public static Action randomDisorder;
         public List<GameObject> randomObjectsToDrop = new List<GameObject>();
-        
-      
-        void OnTriggerEnter(Collider col)
+        public GameObject patient;
+        void Start()
         {
             
+        }
+        
+        void OnTriggerEnter(Collider col)
+        {
+            var temperamentSource = patient.GetComponent<FactionMember>().pad.GetTemperament();
             foreach(var item in randomObjectsToDrop)
             {
                 if(col.CompareTag("Floor"))
@@ -28,7 +33,7 @@ namespace VRH
                     {
                         randomDisorder();
                         ScoreManager.currentScore -= UnityEngine.Random.Range(15, 25);
-                        Debug.Log("random Order called");
+                        Debug.Log(temperamentSource);
                     }
                 }
             }
