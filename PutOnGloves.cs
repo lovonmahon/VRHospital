@@ -9,6 +9,7 @@ namespace VRH
     {
         public static Action glovesOn;
         bool scoreAdded;
+        bool hasGloves;
      
         [Header("Original hand models")]
         [SerializeField] GameObject _rightHand;
@@ -19,31 +20,32 @@ namespace VRH
         void Start()
         {
             scoreAdded = false;
+            hasGloves = false;
         }
         
         void OnTriggerEnter(Collider col) 
         {
-            if(col.gameObject.CompareTag("Player"))
+            if(col.gameObject.CompareTag("Player") && !hasGloves)
             {
-                if(glovesOn != null)
+                _rightHand.GetComponent<Renderer>().material = _gloveColor;
+                _leftHand.GetComponent<Renderer>().material = _gloveColor;
+                hasGloves = true;
+                glovesOn?.Invoke();
+                if(!scoreAdded)
                 {
-                    glovesOn();
-                    _rightHand.GetComponent<Renderer>().material = _gloveColor;
-                    _leftHand.GetComponent<Renderer>().material = _gloveColor;
-                    //Add a score to ScoreManager here
-                    if(!scoreAdded) ScoreManager.currentScore += 25;
+                    ScoreManager.currentScore += 25;
                     scoreAdded = true;
-                }
+                } 
             }
         }
-        void OnTriggerExit(Collider col)
-        {
-            if(col.gameObject.CompareTag("Player")) StartCoroutine("DestroyThisTrigger", 2f);
-        }
-        IEnumerator DestroyThisTrigger()
-        {
-            yield return null;
-            Destroy(this.gameObject);
-        }
+        // void OnTriggerExit(Collider col)
+        // {
+        //     if(col.gameObject.CompareTag("Player")) StartCoroutine("DestroyThisTrigger", 2f);
+        // }
+        // IEnumerator DestroyThisTrigger()
+        // {
+        //     yield return new WaitForSeconds(0.2f);
+        //     Destroy(this.gameObject);
+        // }
     }
 }
