@@ -7,25 +7,31 @@ namespace VRH
 {    
     public class WanderHospitalRoom : IState
     {
+        AIBrain _brain;
         AIReferences aiRef;
         WanderAreasParent _wanderAreasParent;
         int index;
         Vector3 nextDestination;
-        public WanderHospitalRoom(AIReferences aiReference, WanderAreasParent area) 
+        public WanderHospitalRoom(AIBrain brain, AIReferences aiReference, WanderAreasParent area) 
         {
+            _brain = brain;
             aiRef = aiReference;
             _wanderAreasParent = area;
             
         }
+        void Start()
+        {
+
+        }
         public void OnEnter()
         {
-            // AreaOfInterest currentInterrestPoint = _wanderAreasParent.GetRandomArea();
             if(aiRef.agent != null)
             {
                 aiRef.agent.enabled = true;
                 // aiRef.agent.SetDestination(currentInterrestPoint.transform.position);
                 nextDestination = GetNextWaypoint();
                 aiRef.agent.SetDestination(nextDestination);
+                aiRef.anim.SetFloat("forwardSpeed", 1.0f);
             }
             else
             {
@@ -36,16 +42,17 @@ namespace VRH
         {
             aiRef.agent.enabled = false;
             aiRef.agent.ResetPath();
-            // _client.Anim.SetFloat() //set back to zero
+            aiRef.anim.SetFloat("forwardSpeed", 0.0f);
         }
         public void Tick()
         {
-            // _client.Anim.SetFloat();
             if(HasArrived())
             {
                 nextDestination = GetNextWaypoint();
                 aiRef.agent.SetDestination(nextDestination);
+                UpdateAnimator();
             }
+            _brain.climbTarget = Object.FindObjectOfType<HospitalBedClimbPoint>();
         }
         Vector3 GetNextWaypoint()
         {
@@ -63,6 +70,17 @@ namespace VRH
         public Color GetGizmoColor()
         {
             return Color.blue;
+        }
+        void UpdateAnimator()
+        {
+            //First get global velocity on navmesh agent
+            Vector3 velocity = aiRef.agent.velocity;
+            //convert to local velocity
+            Vector3 localVelocity = aiRef.transform.InverseTransformDirection(velocity);
+            //Which direction of interest for movement
+            float speed = localVelocity.z;
+            //Influence the float parameter on the animator by feding it the speed values from the local velocity.
+            aiRef.anim.SetFloat("forwardSpeed", speed);
         }
     }
 }
