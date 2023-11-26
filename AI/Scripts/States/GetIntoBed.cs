@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace VRH
@@ -9,34 +9,40 @@ namespace VRH
     {
         AIReferences _aiRef;
         AIBrain _brain;
-        Vault _vaultRef;
-        public GetIntoBed(AIReferences aiRef, Vault vault)
+        public GetIntoBed(AIBrain brain, AIReferences aiRef)
         {
+            _brain = brain;
             _aiRef = aiRef;
-            _vaultRef = vault;
         }
         public void OnEnter()
         {
             Debug.Log("Getting into bed now");
-            if(_aiRef.agent != null)
-            {
-                _aiRef.agent.enabled = true;
-                _aiRef.anim.SetTrigger("vault");
-                
-            }
-            else
-            {
-                Debug.Log("No navmeshagent");
-            }
+            _aiRef.anim.SetFloat("forwardSpeed", 0.0f);
+            _aiRef.anim.SetTrigger("vault");
+            // if(_aiRef.agent != null)
+            // {
+            //     _aiRef.agent.enabled = true;
+            //     if(_aiRef.agent.isOnOffMeshLink)
+            //     {
+            //         _aiRef.agent.speed = 0.5f;
+            //         _aiRef.anim.SetTrigger("vault");
+            //     }
+            // }
+            // else
+            // {
+            //     Debug.Log("No navmeshagent");
+            // }
         }
         public void Tick()
         {
-            // _vaultRef.PerformVault();
+            
         }
         public void OnExit()
         {
+            _aiRef.agent.speed = 1.0f;
             _aiRef.agent.enabled = false;
             _brain.HasCLimbed = true;
+            _aiRef.anim.ResetTrigger("vault");
         }
         public Color GetGizmoColor()
         {

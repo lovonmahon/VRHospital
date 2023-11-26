@@ -28,7 +28,6 @@ namespace VRH
             if(aiRef.agent != null)
             {
                 aiRef.agent.enabled = true;
-                // aiRef.agent.SetDestination(currentInterrestPoint.transform.position);
                 nextDestination = GetNextWaypoint();
                 aiRef.agent.SetDestination(nextDestination);
                 aiRef.anim.SetFloat("forwardSpeed", 1.0f);
@@ -41,7 +40,6 @@ namespace VRH
         public void OnExit()
         {
             aiRef.agent.enabled = false;
-            aiRef.agent.ResetPath();
             aiRef.anim.SetFloat("forwardSpeed", 0.0f);
         }
         public void Tick()
@@ -52,7 +50,7 @@ namespace VRH
                 aiRef.agent.SetDestination(nextDestination);
                 UpdateAnimator();
             }
-            _brain.climbTarget = Object.FindObjectOfType<HospitalBedClimbPoint>();
+            // _brain.climbTarget = Object.FindObjectOfType<HospitalBedClimbPoint>();
         }
         Vector3 GetNextWaypoint()
         {

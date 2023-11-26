@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class WanderAreasVisualization : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Color ColorCode;
     void OnDrawGizmos() 
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position, 0.3f);
+        Gizmos.DrawSphere(transform.position, 0.1f);
 
     }
 }
