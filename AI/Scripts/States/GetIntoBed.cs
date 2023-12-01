@@ -9,29 +9,29 @@ namespace VRH
     {
         AIReferences _aiRef;
         AIBrain _brain;
-        public GetIntoBed(AIBrain brain, AIReferences aiRef)
+        AgentLinkMover _agentLink;
+        public GetIntoBed(AIBrain brain, AIReferences aiRef, AgentLinkMover agentMover)
         {
             _brain = brain;
             _aiRef = aiRef;
+            _agentLink = agentMover;
         }
         public void OnEnter()
         {
+            _aiRef.agent.enabled = true;
             Debug.Log("Getting into bed now");
-            _aiRef.anim.SetFloat("forwardSpeed", 0.0f);
-            _aiRef.anim.SetTrigger("vault");
-            // if(_aiRef.agent != null)
-            // {
-            //     _aiRef.agent.enabled = true;
-            //     if(_aiRef.agent.isOnOffMeshLink)
-            //     {
-            //         _aiRef.agent.speed = 0.5f;
-            //         _aiRef.anim.SetTrigger("vault");
-            //     }
-            // }
-            // else
-            // {
-            //     Debug.Log("No navmeshagent");
-            // }
+            if(_aiRef.agent != null)
+            {
+                _aiRef.agent.SetDestination(_brain.layPosition.transform.position);
+                if(_aiRef.agent.isOnOffMeshLink)
+                {
+                    _aiRef.agent.speed = 0.5f;
+                }
+            }
+            else
+            {
+                Debug.Log("No navmeshagent");
+            }
         }
         public void Tick()
         {
@@ -39,14 +39,18 @@ namespace VRH
         }
         public void OnExit()
         {
-            _aiRef.agent.speed = 1.0f;
+            _aiRef.agent.speed = 0f;
             _aiRef.agent.enabled = false;
-            _brain.HasCLimbed = true;
-            _aiRef.anim.ResetTrigger("vault");
+            // _brain.HasCLimbed = true;
+            // _aiRef.anim.ResetTrigger("vault");
         }
         public Color GetGizmoColor()
         {
-            return Color.cyan;
+            return Color.green;
+        }
+        public string GetStateName()
+        {
+            return this.ToString();
         }
     }
 }

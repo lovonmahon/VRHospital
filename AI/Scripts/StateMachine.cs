@@ -99,5 +99,9 @@ public class StateMachine
       }
       return Color.grey;
    }
+   public string GetStateName()
+   {
+      return _currentState.ToString();
+   }
   
 }

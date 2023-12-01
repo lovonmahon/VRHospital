@@ -1,12 +1,10 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
 namespace VRH
 {
     public class GetOutOfBed : IState
     {
-        public static Action IsStanding;
-        public static Action isOutOfBed;
         AIReferences _aiRef;
         AIBrain _aiBrain;
         public GetOutOfBed(AIBrain aiBrain, AIReferences aiRef)
@@ -16,11 +14,29 @@ namespace VRH
         }
         public void OnEnter()
         {
-            StandUp();
+            _aiRef.agent.enabled = true;
+            _aiBrain.canAttack = true;
+            _aiRef.anim.SetFloat("forwardSpeed", 1f);
+            Debug.Log("I'm coming for ya!");
+            
+            if(_aiRef.agent != null)
+            {
+                GetOnGround();
+                if(_aiRef.agent.isOnOffMeshLink)
+                {
+                    _aiRef.agent.speed = 0.5f;
+                }
+                _aiRef.agent.speed = 1.0f;
+            }
+            else
+            {
+                Debug.Log("No navmeshagent");
+            }
         }
         public void Tick()
         {
-
+            _aiRef.agent.SetDestination(SetDestinationTest.currentTargetDestination);
+            GetOnGround();
         }
         public void OnExit()
         {
@@ -30,17 +46,16 @@ namespace VRH
         {
             return Color.red;
         }
-        void StandUp()
+        void GetOnGround()
         {
-            IsStanding?.Invoke();
+            _aiRef.agent.SetDestination(SetDestinationTest.currentTargetDestination);
+
+            
         }
-        void LerpOutOfBed()
+        public string GetStateName()
         {
-            //play animation of climbing
+            return this.ToString();
         }
-        void HopDown()
-        {
-            isOutOfBed?.Invoke();
-        }
+        
     }
 }

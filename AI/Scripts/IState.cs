@@ -5,5 +5,6 @@ public interface IState
     void OnEnter();
     void OnExit();
     Color GetGizmoColor();
+    string GetStateName();
     
 }

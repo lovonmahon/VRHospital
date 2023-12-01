@@ -67,7 +67,7 @@ namespace VRH
         }
         public Color GetGizmoColor()
         {
-            return Color.blue;
+            return Color.cyan;
         }
         void UpdateAnimator()
         {
@@ -79,6 +79,10 @@ namespace VRH
             float speed = localVelocity.z;
             //Influence the float parameter on the animator by feding it the speed values from the local velocity.
             aiRef.anim.SetFloat("forwardSpeed", speed);
+        }
+        public string GetStateName()
+        {
+            return this.ToString();
         }
     }
 }

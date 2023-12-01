@@ -15,7 +15,7 @@ namespace VRH
             _anim = GetComponent<Animator>();
             if(_anim == null)
             {
-                Debug.Log("No animator in "+ GetType());
+                Debug.Log("No animator "+ GetType());
             }
         }
         void Update()
@@ -35,13 +35,15 @@ namespace VRH
             float time = 0;
             while (time < duration)
             {
-                _navAgent.transform.position = Vector3.MoveTowards(_navAgent.transform.position, EndPos.position/*endPos*/, /*time / duration*/(_navAgent.speed * 0.3f) * Time.deltaTime);
-                
+                _navAgent.transform.position = Vector3.MoveTowards(_navAgent.transform.position, EndPos.position /*endPos*/, /*time / duration*/(_navAgent.speed * 0.5f) * Time.deltaTime);
 
                 time += Time.deltaTime;
                 yield return null;
             }
-            agent.CompleteOffMeshLink();
+            if(time >= duration)
+            {
+                agent.CompleteOffMeshLink();
+            }
         }
 
         private void CheckOffMeshLinkStatus()
@@ -49,6 +51,7 @@ namespace VRH
             if (_navAgent.isOnOffMeshLink)
             {
                 _navAgent.speed = _navAgent.speed * 0.02f;
+                // _anim.SetTrigger("vault");
             }
         }
     }
