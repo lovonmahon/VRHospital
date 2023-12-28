@@ -16,9 +16,9 @@ namespace VRH
         public HospitalBedClimbPoint BedTarget{get; set;}
         public BedLayPosition layPosition {get; set;}
         public DismountPosition dismountPosition {get; set;}
-        public Transform PlayerTarget;
+        public PlayerTarget playerTarget {get; set;}
         public Vector3 PlayerTargetPosition => SetDestinationTest.currentTargetDestination;
-        public bool HasCLimbed {get; set;}
+        public bool hasCLimbed {get; set;}
         public bool  canAttack {get; set;}
         float characterHeight = 2f;
         float characterRadius = 0.5f;
@@ -34,6 +34,7 @@ namespace VRH
             BedTarget = FindObjectOfType<HospitalBedClimbPoint>();
             layPosition = FindObjectOfType<BedLayPosition>();
             dismountPosition = FindObjectOfType<DismountPosition>();
+            playerTarget = FindObjectOfType<PlayerTarget>();
             _vault = GetComponent<Vault>();
             _agentMover = GetComponent<AgentLinkMover>();
             
@@ -43,7 +44,7 @@ namespace VRH
             var getIntoBed = new GetIntoBed(this, _aiRef, _agentMover);
             var walktoBed = new WalkToBed(this, _aiRef, _vault);
             var wakeup = new WakeUp(this, _aiRef);
-            var attack = new GetOutOfBed(this, _aiRef);
+            var getOutOfBed = new GetOutOfBed(this, _aiRef);
             var fight = new ThrowPunches(this, _aiRef);
             #endregion
 
@@ -52,19 +53,23 @@ namespace VRH
             At(wander, walktoBed, HasTarget());
             At(walktoBed, getIntoBed, ReachedTarget());//Makes AI get into bed
             At(getIntoBed, wakeup, Annoyed());
-            At(wakeup, attack, ChasePlayer());
-            At(attack, fight, InRange());
-            // At(fight, attack, ReTarget());
+            At(wakeup, getOutOfBed, ChasePlayer());
+            At(getOutOfBed, fight, InRange());
+            At(fight, walktoBed, () => ThrowPunches.attackTimer <= 0);
+            
             #endregion
+
             #region any transitions
             _stateMachine.AddAnyTransition(wander, HasNoTarget());
             #endregion
+
             #region starting state
             //START STATE
             // _stateMachine.SetState(wander);
-            _stateMachine.SetState(attack);
-            // _stateMachine.SetState(fight);
+            // _stateMachine.SetState(attack);
+            _stateMachine.SetState(getOutOfBed);
             #endregion
+
             #region conditions & functions
             //FUNCTIONS & CONDITIONS
             void At(IState from, IState to, Func<bool> condition) => _stateMachine.AddTransition(from, to, condition);
@@ -73,15 +78,15 @@ namespace VRH
             Func<bool> HasTarget() => () => BedTarget != null;
             Func<bool> HasNoTarget() => () => BedTarget == null;
             Func<bool> ReachedTarget() => () => !canAttack && Vector3.Distance(
-                                        transform.position, BedTarget.transform.position) <= 1.0f;
-            // Func<bool> CrawlIntoBed() => () => transform.position == BedTarget.transform.position;
+                                        transform.position, BedTarget.transform.position) <= 1.2f;
             Func<bool> Annoyed() => () => Input.GetKey(KeyCode.A);
-            Func<bool> ChasePlayer() => () => canAttack && Vector3.Distance(
-                                        transform.position, PlayerTargetPosition) > 2.0f;
+            Func<bool> ChasePlayer() => () => canAttack 
+                                        && Vector3.Distance(
+                                        transform.position, PlayerTargetPosition) >= 1.5f;
+                                        //&& CheckAnimatorStateComplete("standup");
             Func<bool> InRange() => () => canAttack && Vector3.Distance(
-                                        transform.position, PlayerTargetPosition) < 2.0f;
-            // Func<bool> ReTarget() => () => Vector3.Distance(
-            //                             transform.position, PlayerTargetPosition) > 2.0f;                                        
+                                        transform.position, PlayerTargetPosition) < 1.5f;
+                                                   
             #endregion
         }
 
@@ -96,6 +101,15 @@ namespace VRH
                 Gizmos.color = Color.gray;
                 Gizmos.DrawSphere(transform.position + Vector3.up * 3, 0.5f);
             }
+        }
+        bool CheckAnimatorStateComplete(string anim)
+        {
+            if(_aiRef.anim.GetCurrentAnimatorStateInfo(0).IsName(anim) &&
+                _aiRef.anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f)
+                {
+                    return true;
+                }
+                return false;
         }
     }
 }

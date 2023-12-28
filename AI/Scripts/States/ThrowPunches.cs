@@ -7,6 +7,7 @@ namespace VRH
     {
         AIReferences _aiRef;
         AIBrain _aiBrain;
+        public static float attackTimer;
         public ThrowPunches(AIBrain aiBrain, AIReferences aiRef)
         {
             _aiRef = aiRef;
@@ -14,6 +15,7 @@ namespace VRH
         }
         public void OnEnter()
         {
+            attackTimer = 4f;
             _aiRef.agent.speed = 0f;
             _aiRef.anim.SetFloat("forwardSpeed", 0.21f);
             Debug.Log("Throwing hands");
@@ -21,14 +23,15 @@ namespace VRH
         }
         public void Tick()
         {
-            // {
-            //     _aiRef.anim.SetTrigger("fight");
-            // }
+            {
+                attackTimer -= Time.deltaTime;
+            }
         }
         public void OnExit()
         {
+            attackTimer = 0f;
             _aiBrain.canAttack = false;
-            _aiRef.agent.speed = 1.0f;
+            _aiRef.agent.speed = 1f;
             _aiRef.anim.SetFloat("forwardSpeed", 1f);
             _aiRef.anim.ResetTrigger("fight");
         }

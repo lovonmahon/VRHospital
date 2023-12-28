@@ -5,7 +5,7 @@ namespace VRH
 {
     public class WakeUp : IState
     {
-        public static Action canAttack;
+        // public static Action canAttack;
         AIReferences _aiRef;
         AIBrain _aiBrain;
         // bool canAttack;
@@ -19,20 +19,8 @@ namespace VRH
             _aiRef.anim.SetTrigger("wakeup");
             Debug.Log("waking up");
             _aiRef.agent.enabled = true;
+            //TO-DO: hook up canAttack to Faction manager temperament value
             _aiBrain.canAttack = true;
-            // canAttack = true;
-            
-            // if(_aiRef.anim.GetCurrentAnimatorStateInfo(0).IsName("wakeup"))
-            // {
-            //     Debug.Log($"Alright, that's it! {_aiRef.anim.GetCurrentAnimatorStateInfo(0)}");
-            //     _aiRef.agent.enabled = true;
-            //     GetOnGround();
-            // }
-            // else if(!_aiRef.anim.IsInTransition(0))
-            // {
-            //     Debug.Log($"Alright, that's it! {_aiRef.anim.IsInTransition(0)}");
-                
-            // }
         }
         public void Tick()
         {
@@ -41,7 +29,6 @@ namespace VRH
         public void OnExit()
         {
             _aiRef.agent.enabled = false;
-            // canAttack = false;
         }
         public Color GetGizmoColor()
         {

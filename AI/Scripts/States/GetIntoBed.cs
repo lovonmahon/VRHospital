@@ -8,11 +8,11 @@ namespace VRH
     public class GetIntoBed : IState
     {
         AIReferences _aiRef;
-        AIBrain _brain;
+        AIBrain _aiBrain;
         AgentLinkMover _agentLink;
-        public GetIntoBed(AIBrain brain, AIReferences aiRef, AgentLinkMover agentMover)
+        public GetIntoBed(AIBrain aiBrain, AIReferences aiRef, AgentLinkMover agentMover)
         {
-            _brain = brain;
+            _aiBrain = aiBrain;
             _aiRef = aiRef;
             _agentLink = agentMover;
         }
@@ -22,7 +22,7 @@ namespace VRH
             Debug.Log("Getting into bed now");
             if(_aiRef.agent != null)
             {
-                _aiRef.agent.SetDestination(_brain.layPosition.transform.position);
+                _aiRef.agent.SetDestination(_aiBrain.layPosition.transform.position);
                 if(_aiRef.agent.isOnOffMeshLink)
                 {
                     _aiRef.agent.speed = 0.5f;
@@ -35,7 +35,10 @@ namespace VRH
         }
         public void Tick()
         {
-            
+            if(_aiRef.agent.isOnOffMeshLink)
+            {
+                _aiRef.agent.speed = 0.2f;
+            }
         }
         public void OnExit()
         {

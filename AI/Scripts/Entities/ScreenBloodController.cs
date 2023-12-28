@@ -19,18 +19,6 @@ public class ScreenBloodController : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        // if(Input.GetKey(KeyCode.F))
-        // {
-        //     AggroScreenEffectOn();
-        // }
-        // else
-        // {
-        //     AggroScreenEffectOff();
-        // }
-    }
-
     private void AggroScreenEffectOff()
     {
         Color c = Img.color;
@@ -40,7 +28,6 @@ public class ScreenBloodController : MonoBehaviour
 
     public void AggroScreenEffectOn()
     {
-        Debug.Log("Screen effect On");
         float time = 1f;
         //Store temporary color for modifying
         Color c = Img.color;

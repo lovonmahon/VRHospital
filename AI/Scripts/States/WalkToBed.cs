@@ -6,27 +6,27 @@ namespace VRH
     public class WalkToBed : IState
     {
         AIReferences _aiRef;
-        AIBrain _brain;
+        AIBrain _aiBrain;
         Vault _vault;
-        public WalkToBed(AIBrain brain, AIReferences aiRef, Vault vault)
+        public WalkToBed(AIBrain aiBrain, AIReferences aiRef, Vault vault)
         {
             _aiRef = aiRef;
-            _brain = brain;
+            _aiBrain = aiBrain;
             _vault = vault;
         }
         public void Tick()
         {
             if(_aiRef.agent.isOnOffMeshLink)
-                {
-                    _aiRef.agent.speed = 0.2f;
-                    // _vault.DoVault();
-                }
+            {
+                _aiRef.agent.speed = 0.2f;
+            }
         }
         public void OnEnter()
         {
             _aiRef.agent.enabled = true;
-            _aiRef.agent.SetDestination(_brain.BedTarget.transform.position);
+            _aiRef.agent.SetDestination(_aiBrain.BedTarget.transform.position);
             _aiRef.anim.SetFloat("forwardSpeed", 0.5f);
+            Debug.Log("Walking to bed");
         }
         public void OnExit()
         {
