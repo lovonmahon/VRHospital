@@ -39,6 +39,13 @@ namespace VRH
             {
                 _aiRef.agent.speed = 0.2f;
             }
+            if(_aiRef.agent.remainingDistance <= 1.5f)
+            {
+                float time = 0.0f;
+                time += Time.deltaTime;
+                _aiRef.transform.rotation = Quaternion.Slerp(_aiRef.transform.rotation, _aiBrain.layPosition.transform.rotation, time);
+                
+            }
         }
         public void OnExit()
         {

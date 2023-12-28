@@ -82,8 +82,8 @@ namespace VRH
             Func<bool> Annoyed() => () => Input.GetKey(KeyCode.A);
             Func<bool> ChasePlayer() => () => canAttack 
                                         && Vector3.Distance(
-                                        transform.position, PlayerTargetPosition) >= 1.5f;
-                                        //&& CheckAnimatorStateComplete("standup");
+                                        transform.position, PlayerTargetPosition) >= 1.5f
+                                        && CheckAnimatorStateComplete("standup");//Is the state done playing?
             Func<bool> InRange() => () => canAttack && Vector3.Distance(
                                         transform.position, PlayerTargetPosition) < 1.5f;
                                                    

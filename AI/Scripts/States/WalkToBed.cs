@@ -32,7 +32,7 @@ namespace VRH
         {
             _aiRef.agent.enabled = false;
             _aiRef.anim.SetFloat("forwardSpeed", 0.0f);
-            _aiRef.anim.SetTrigger("vault");
+            _aiRef.anim.SetTrigger("vault"); //Used on OffMeshLinks
         }
         public Color GetGizmoColor()
         {
