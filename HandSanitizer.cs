@@ -9,13 +9,11 @@ namespace VRH
         public GameObject handSanitizerSpray;
         bool scoreAdded;
 
-        // Start is called before the first frame update
         void Start()
         {
             handSanitizerSpray.SetActive(false);
             scoreAdded = false;
         }
-        // Update is called once per frame
         void Update()
         {
 

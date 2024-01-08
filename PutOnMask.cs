@@ -9,13 +9,11 @@ namespace VRH
         public static Action maskOn;
         bool scoreAdded;
         [SerializeField] GameObject faceMask;
-        // Start is called before the first frame update
         void Start()
         {
             scoreAdded = false;
         }
 
-        // Update is called once per frame
        void OnTriggerEnter(Collider col)
        {
            if(col.gameObject.CompareTag("Player"))

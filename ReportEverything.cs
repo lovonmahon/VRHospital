@@ -30,6 +30,7 @@ namespace VRH
             RandomDisorder.randomDisorder += PatientKnowledgeNegative;
             DialogueEffects.onNegativeDialogue += PatientKnowledgeNegative;
             LightSwitch._lightsOn += PatientKnowledgeNegative;
+            InfusionMachineOperation.incorrectIndustionSetting += PatientKnowledgeNegative;
             
 
             //positive actions
@@ -39,6 +40,7 @@ namespace VRH
             PutOnGloves.glovesOn += PatientKnowledgePositive;
             LightSwitch._lightsOff += PatientKnowledgePositive;
             GiveToPatient.onHappy += PatientKnowledgePositive;
+            InfusionMachineOperation.correctInfusionSetting += PatientKnowledgePositive;
         }
         void OnDisable()
         {
@@ -48,6 +50,7 @@ namespace VRH
             RandomDisorder.randomDisorder -= PatientKnowledgeNegative;
             DialogueEffects.onNegativeDialogue -= PatientKnowledgeNegative;
             LightSwitch._lightsOn -= PatientKnowledgeNegative;
+            InfusionMachineOperation.incorrectIndustionSetting -= PatientKnowledgeNegative;
 
             //Positive actions
             PutOnMask.maskOn -= PatientKnowledgePositive;
@@ -56,6 +59,7 @@ namespace VRH
             PutOnGloves.glovesOn -= PatientKnowledgePositive;
             LightSwitch._lightsOff -= PatientKnowledgePositive;
             GiveToPatient.onHappy -= PatientKnowledgePositive;
+            InfusionMachineOperation.correctInfusionSetting -= PatientKnowledgePositive;
         }
 
         void PatientKnowledgePositive()

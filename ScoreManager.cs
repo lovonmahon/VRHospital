@@ -33,12 +33,6 @@ namespace VRH
                 _score = value;
             } 
         }
-        // Start is called before the first frame update
-        void Start()
-        {
-            //
-        }
-        // Update is called once per frame
         void Update()
         {
             scoreText.text = "Your Score " + _score.ToString() + " /100";

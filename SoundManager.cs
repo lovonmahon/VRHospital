@@ -45,7 +45,6 @@ namespace VRH
         {
             _coughReset += Time.deltaTime;
         }
-        // Update is called once per frame
         void Update()
         {
             //Tag the cough function in profiler for analysis
