@@ -8,9 +8,12 @@ namespace VRH
     {
         public GameObject infusionMachineCanvas;
         public static bool infusionStarted;
+        public static bool nearInfusionMachine;
         public GameObject[] buttonsUI;
         void Start()
         {
+            infusionStarted = false;
+            nearInfusionMachine = false;
             for(int i = 0; i < buttonsUI.Length; i++)
             {
                 buttonsUI[i].SetActive(false);
@@ -18,18 +21,25 @@ namespace VRH
         }
         void OnTriggerEnter(Collider other)
         {
-            if(other.GetComponent<PlayerComponent>() && !infusionStarted)
+            if(other.GetComponent<PlayerComponent>() /*&& !infusionStarted*/)
             {
-                infusionMachineCanvas.SetActive(true);
+                for(int i = 0; i < buttonsUI.Length; i++)
+                {
+                    buttonsUI[i].SetActive(true);
+                }
+                nearInfusionMachine = true;
             }
+            
         }
-        public static void EnableUIDosageOptions()
+        void OnTriggerExit(Collider other)
         {
-            //Initialize a new instance of the class to reference its non-static buttonsUI field
-            PatientNotificationCanvas pc = new PatientNotificationCanvas();
-            for(int i = 0; i < pc.buttonsUI.Length; i++)
+            if(other.GetComponent<PlayerComponent>() /*&& !infusionStarted*/)
             {
-                pc.buttonsUI[i].SetActive(true);
+                for(int i = 0; i < buttonsUI.Length; i++)
+                {
+                    buttonsUI[i].SetActive(false);
+                }
+                nearInfusionMachine = false;
             }
         }
     }
