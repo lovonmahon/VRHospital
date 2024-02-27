@@ -13,7 +13,7 @@ namespace VRH
         public static Action neutral;
         public static Action hostile;
         float _counter;
-        float _cooldownTime = 15f;
+        float _cooldownTime = 10f;
 
         void Update() 
         {

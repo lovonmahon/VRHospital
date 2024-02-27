@@ -16,7 +16,7 @@ namespace VRH
         public void OnEnter()
         {
             attackTimer = 4f;
-            _aiRef.agent.speed = 0f;
+            _aiRef.agent.speed = 0.21f;
             _aiRef.anim.SetFloat("forwardSpeed", 0.21f);
             Debug.Log("Throwing hands");
             _aiRef.anim.SetTrigger("fight");

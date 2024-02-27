@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace VRH
 {    
+    //Attach to Infusion Machine
     public class PatientNotificationCanvas : MonoBehaviour
     {
         public GameObject infusionMachineCanvas;

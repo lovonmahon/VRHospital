@@ -13,6 +13,7 @@ namespace VRH
         Animator _anim;
         Vault _vault;
         AgentLinkMover _agentMover;
+        public ReportEverything reportEverything {get; set;}
         public HospitalBedClimbPoint BedTarget{get; set;}
         public BedLayPosition layPosition {get; set;}
         public DismountPosition dismountPosition {get; set;}
@@ -37,6 +38,11 @@ namespace VRH
             playerTarget = FindObjectOfType<PlayerTarget>();
             _vault = GetComponent<Vault>();
             _agentMover = GetComponent<AgentLinkMover>();
+            reportEverything = FindObjectOfType<ReportEverything>();
+            if(reportEverything == null)
+            {
+                Debug.Log($"{reportEverything} script not found!");
+            }
             
             #region states
             //STATES
@@ -67,7 +73,8 @@ namespace VRH
             //START STATE
             // _stateMachine.SetState(wander);
             // _stateMachine.SetState(attack);
-            _stateMachine.SetState(getOutOfBed);
+            // _stateMachine.SetState(getOutOfBed);
+            _stateMachine.SetState(getIntoBed);
             #endregion
 
             #region conditions & functions
@@ -79,7 +86,7 @@ namespace VRH
             Func<bool> HasNoTarget() => () => BedTarget == null;
             Func<bool> ReachedTarget() => () => !canAttack && Vector3.Distance(
                                         transform.position, BedTarget.transform.position) <= 1.2f;
-            Func<bool> Annoyed() => () => Input.GetKey(KeyCode.A);
+            Func<bool> Annoyed() => () => reportEverything.InfusionPumpNotifyAIBrainCanAttack();//Input.GetKey(KeyCode.A);
             Func<bool> ChasePlayer() => () => canAttack 
                                         && Vector3.Distance(
                                         transform.position, PlayerTargetPosition) >= 1.5f

@@ -50,8 +50,8 @@ namespace VRH
         public void OnExit()
         {
             _aiRef.agent.enabled = false;
-            _aiRef.agent.speed = 0f;
-            _aiRef.anim.SetFloat("forwardSpeed", 0f);
+            _aiRef.agent.speed = 0.25f;
+            _aiRef.anim.SetFloat("forwardSpeed", 0.25f);
         }
         public Color GetGizmoColor()
         {

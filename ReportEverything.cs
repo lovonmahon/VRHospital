@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using PixelCrushers.LoveHate;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ namespace VRH
         GameObject _player;
         DeedReporter _deed;
         FactionMember _patientFaction;
+        bool getAggressive;
         void Start()
         {
             _patient = GameObject.Find("Patient");
@@ -31,6 +33,7 @@ namespace VRH
             DialogueEffects.onNegativeDialogue += PatientKnowledgeNegative;
             LightSwitch._lightsOn += PatientKnowledgeNegative;
             InfusionMachineOperation.incorrectInfustionSetting += PatientKnowledgeNegative;
+            InfusionMachineOperation.incorrectInfustionSetting += AggressionNotifier;
             
 
             //positive actions
@@ -51,6 +54,7 @@ namespace VRH
             DialogueEffects.onNegativeDialogue -= PatientKnowledgeNegative;
             LightSwitch._lightsOn -= PatientKnowledgeNegative;
             InfusionMachineOperation.incorrectInfustionSetting -= PatientKnowledgeNegative;
+            InfusionMachineOperation.incorrectInfustionSetting += AggressionNotifier;
 
             //Positive actions
             PutOnMask.maskOn -= PatientKnowledgePositive;
@@ -71,8 +75,24 @@ namespace VRH
         {
             // _deed.ReportDeed("Hurt", _patientFaction);
             //happiness, pleasure, arousal, dominance
-            _patientFaction.pad.Modify(-20, -20, 20, 25);
+            _patientFaction.pad.Modify(-5, -5, 15, -5);
 
+        }
+        void AggressionNotifier()
+        {
+            getAggressive = true;
+            //happiness, pleasure, arousal, dominance
+            _patientFaction.pad.Modify(-100, -100, 100, 100);
+            StartCoroutine(ResetAggression());
+        }
+        public bool InfusionPumpNotifyAIBrainCanAttack()
+        {
+            return getAggressive;
+        }
+        IEnumerator ResetAggression()
+        {
+            yield return new WaitForSeconds(15f);
+            getAggressive = false;
         }
     }
 }

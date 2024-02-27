@@ -21,6 +21,14 @@ namespace VRH
         {
             scoreAdded = false;
             hasGloves = false;
+
+            hasGloves = true;
+            glovesOn?.Invoke();
+            if(!scoreAdded)
+            {
+                ScoreManager.currentScore += 25;
+                scoreAdded = true;
+            } 
         }
         
         void OnTriggerEnter(Collider col) 

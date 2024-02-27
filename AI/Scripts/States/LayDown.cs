@@ -19,7 +19,8 @@ namespace VRH
             Debug.Log("Laying down now");
             _aiRef.agent.enabled = true;
             _aiRef.agent.SetDestination(_aiBrain.layPosition.transform.position);
-            _aiRef.anim.SetFloat("forwardSpeed", 0.5f);
+            _aiRef.anim.SetFloat("forwardSpeed", 0.1f);
+            _aiRef.anim.SetBool("sick", true);
         }
         public void Tick()
         {
@@ -29,6 +30,7 @@ namespace VRH
         {
             _aiRef.agent.enabled = false;
             _aiRef.anim.SetFloat("forwardSpeed", 0.0f);
+            _aiRef.anim.SetBool("sick", false);
         }
         public Color GetGizmoColor()
         {
