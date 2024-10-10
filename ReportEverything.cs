@@ -44,6 +44,7 @@ namespace VRH
             LightSwitch._lightsOff += PatientKnowledgePositive;
             GiveToPatient.onHappy += PatientKnowledgePositive;
             InfusionMachineOperation.correctInfusionSetting += PatientKnowledgePositive;
+            TrashItems.onBioHazDisposal += PatientKnowledgePositive;
         }
         void OnDisable()
         {
@@ -64,6 +65,7 @@ namespace VRH
             LightSwitch._lightsOff -= PatientKnowledgePositive;
             GiveToPatient.onHappy -= PatientKnowledgePositive;
             InfusionMachineOperation.correctInfusionSetting -= PatientKnowledgePositive;
+            TrashItems.onBioHazDisposal -= PatientKnowledgePositive;
         }
 
         void PatientKnowledgePositive()

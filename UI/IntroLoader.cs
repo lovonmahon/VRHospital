@@ -16,7 +16,9 @@ public class IntroLoader : MonoBehaviour
     IEnumerator LoadVRH()
     {
         //wait for seconds optimization
-        yield return waitTime;
-        AsyncOperation operation = SceneManager.LoadSceneAsync(level);
+        yield return waitForSeconds;
+        // AsyncOperation operation = SceneManager.LoadSceneAsync(level);
+
+        SceneManager.LoadScene(level);
     }
 }
